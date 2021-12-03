@@ -1,0 +1,40 @@
+#!/bin/bash
+
+usage () {
+  cat << EOF >&2
+usage: $0 [options]
+
+Options:
+    -d, --day N       Which day's code to run, valid range 1-25
+    -p, --part N      Which part of the problem to run, valid range 1-2
+EOF
+}
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  key="$1"
+
+  case $key in
+    -d|--day)
+      DAY="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -p|--part)
+      PART="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    *)    # unknown option
+      usage
+      exit
+      ;;
+  esac
+done
+
+if [ -z "$DAY" ] || [ -z "$PART" ] || [ $DAY -lt 1 ] || [ $DAY -gt 25 ] || [ $PART -lt 1 ] || [ $PART -gt 2 ]; then
+  usage
+  exit
+fi
+
+ruby "src/day$DAY/main.rb" "input/day$DAY.txt" "-p$PART"

@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ruby src/day2/main.rb src/day2/input.txt $@
