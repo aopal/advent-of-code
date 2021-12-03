@@ -30,8 +30,28 @@ def part1(data)
 end
 
 def part2(data)
-  new_data = data.each_cons(3).map{|a, b, c| a+b+c}
-  part1(new_data)
+  position = {
+    x: 0,
+    y: 0,
+    aim: 0,
+  }
+
+  data.each do |str|
+    a = str.split(" ")
+    dir = a[0]
+    amount = a[1].to_i
+
+    if dir == "forward"
+      position[:x] += amount
+      position[:y] += position[:aim] * amount
+    elsif dir == "down"
+      position[:aim] += amount
+    elsif dir == "up"
+      position[:aim] -= amount
+    end
+  end
+
+  puts position[:x] * position[:y]
 end
 
 if ARGV.length != 2
